@@ -87,7 +87,8 @@ class Adyen_Payment_Model_Authenticate extends Mage_Core_Model_Abstract
         $signMac = Zend_Crypt_Hmac::compute(pack("H*", $secretWord), 'sha256', $signData);
         $localStringToHash = base64_encode(pack('H*', $signMac));
 
-        if (strcmp($localStringToHash, $response->getData('merchantSig')) === 0) {
+        // The merchant Sig sometimes has characters which are url encoded; thus perform an url decode.
+        if (strcmp($localStringToHash, urldecode($response->getData('merchantSig'))) === 0) {
             return true;
         }
 
