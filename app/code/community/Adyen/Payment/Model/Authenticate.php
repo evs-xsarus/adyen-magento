@@ -70,7 +70,7 @@ class Adyen_Payment_Model_Authenticate extends Mage_Core_Model_Abstract
             $nv = explode("=", $pair);
             $name = urldecode($nv[0]);
             $value = urldecode($nv[1]);
-            $result[$name] = $value;
+            $result[$name] = urldecode($value);
         }
 
         // do not use merchantSig in calculation
